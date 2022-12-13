@@ -1,0 +1,21 @@
+-- CREATE TABLE adminusers (f_name varchar not null,l_name varchar not null,user_id integer PRIMARY KEY not null,user_password varcharnot null,e_mail varcharnot null,phone_number integernot null,branch_code integernot null,user_type varcharnot null)
+-- CREATE FUNCTION CHECK_PASS(U_ID INT, PASS VARCHAR)
+-- RETURNS BOOLEAN AS $$
+-- DECLARE 
+-- 	CHECK_PASS BOOLEAN;
+-- BEGIN
+-- 	SELECT (user_password = $2) into CHECK_PASS
+-- 	FROM adminusers
+-- 	where user_id = $1;
+-- 	return CHECK_PASS;
+-- END;
+-- $$  LANGUAGE plpgsql
+
+-- select * from adminusers
+
+-- CREATE FUNCTION create_Adminuser(f_name varchar,l_name varchar,user_id integer,user_password varchar,e_mail varchar,phone_number integer,branch_code integer,user_type varchar)
+-- RETURNS void as $$
+-- BEGIN
+-- 	insert into adminusers values ($1,$2,$3,$4,$5,$6,$7,$8);
+-- END;
+-- $$  LANGUAGE plpgsql
