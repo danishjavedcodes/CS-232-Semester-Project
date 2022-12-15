@@ -8,11 +8,13 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:sys@localhost/Wall-Street-Admin'
 db=SQLAlchemy(app)
 @app.route('/', methods=['GET', "POST"])
-def greet_students():
-    return "Hello Students"
+def index():
+    return render_template('index.html')
 
 Base = declarative_base()
 metadata = Base.metadata
+
+
 
 class Adminuser(Base):
     __tablename__ = 'adminusers'
@@ -21,7 +23,7 @@ class Adminuser(Base):
     l_name = Column(String)
     user_id = Column(Integer, primary_key=True)
     user_password = Column(String, nullable=False)
-    e_mail = Column(String)
+    e_mail = Column(String, nullable=False)
     phone_number = Column(Integer, nullable=False)
     branch_code = Column(Integer, nullable=False)
     user_type = Column(String, nullable=False)
@@ -34,7 +36,7 @@ class Adminuser(Base):
         self.phone_number = phone_number
         self.branch_code = branch_code
         self.user_type = user_type
-
+    
 @app.route ('/submit', methods=['GET', 'POST'])
 def submit():
     if request.method == 'POST':
