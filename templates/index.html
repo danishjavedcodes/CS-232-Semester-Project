@@ -8,9 +8,19 @@
 </head>
 <body>
   <div>
+      <div class="sign in">
+      <h1>Sign-in</h1>
+      <form action="/signin" method='POST'>
+        <br><label for = "user_id">user id</label>
+        <br><input type="text" id="user_id" name="user_id">
+        <br><label for = "user_password">Password</label>
+        <br><input type="text" id="user_password" name="user_password">
+        <input type="submit" value="Submit">
+    </form>
+  </div>
     <div class="sign up">
       <h1>Sign-up</h1>
-    <form action="/signup" method='POST'>
+    <form action="/signupuser" method='POST'>
       <br><label for = "f_name">F name</label>
       <br><input type="text" id="f_name" name="f_name">
       <br><label for = "l_name">L name</label>
@@ -21,22 +31,8 @@
       <br><input type="text" id="user_password" name="user_password">
       <br><label for = "e_mail">e_mail</label>
       <br><input type="text" id="e_mail" name="e_mail">
-      <br><label for = "phone_number">phone_number (923xxxxxxx)</label>
-      <br><input type="text" id="phone_number" name="phone_number">
-      <br><label for = "branch_code">branch_code</label>
-      <br><input type="text" id="branch_code" name="branch_code">
-      <br><label for = "user_type">user_type</label>
-      <br><input type="text" id="user_type" name="user_type">
-      <input type="submit" value="Submit">
-  </form>
-  </div>
-  <div class="sign in">
-    <h1>Sign-in</h1>
-    <form action="/signin" method='POST'>
-      <br><label for = "user_id">user id</label>
-      <br><input type="text" id="user_id" name="user_id">
-      <br><label for = "user_password">Password</label>
-      <br><input type="text" id="user_password" name="user_password">
+      <br><label for = "contact">phone_number (923xxxxxxx)</label>
+      <br><input type="text" id="contact" name="contact">
       <input type="submit" value="Submit">
   </form>
   </div>

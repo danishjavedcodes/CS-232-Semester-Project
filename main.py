@@ -13,6 +13,11 @@ def index():
     return render_template('index.html')
 
 
+@app.route('/registerHOD')
+def registerHOD():
+    return render_template('register_hod.html')
+
+
 conn = psycopg2.connect(
     database="Wall-Street-Admin",
     user="postgres",
@@ -22,8 +27,26 @@ conn = psycopg2.connect(
 )
 
 
-@app.route('/signup', methods=['GET', 'POST'])
+@app.route('/signupuser', methods=['GET', 'POST'])
 def signup():
+    if request.method == 'POST':
+        f_name = request.form['f_name']
+        l_name = request.form['l_name']
+        user_id = request.form['user_id']
+        user_password = request.form['user_password']
+        e_mail = request.form['e_mail']
+        contact = request.form['contact']
+        query = "'" + f_name + "'" + "," + "'" + l_name + "'" + "," + str(user_id) + "," + "'" + user_password + "'" + "," + "'" + e_mail + "'" + "," + str(
+            contact)
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO customers (f_name,l_name,user_id,pass,email,contact) values (" + query + ")")
+        conn.commit()
+    return render_template('index.html')
+
+
+@app.route('/signup_hod', methods=['GET', 'POST'])
+def signup_hod():
     if request.method == 'POST':
         f_name = request.form['f_name']
         l_name = request.form['l_name']
@@ -39,7 +62,7 @@ def signup():
         cur.execute(
             "INSERT INTO adminusers (f_name,l_name,user_id,user_password,e_mail,phone_number,branch_code,user_type) values (" + query + ")")
         conn.commit()
-    return render_template('index.html')
+    return render_template('ceo.html')
 
 
 @app.route('/signin', methods=['GET', 'POST'])
