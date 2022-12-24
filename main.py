@@ -22,8 +22,8 @@ conn = psycopg2.connect(
 )
 
 
-@app.route('/submit', methods=['GET', 'POST'])
-def submit():
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
     if request.method == 'POST':
         f_name = request.form['f_name']
         l_name = request.form['l_name']
@@ -38,23 +38,34 @@ def submit():
         cur = conn.cursor()
         cur.execute(
             "INSERT INTO adminusers (f_name,l_name,user_id,user_password,e_mail,phone_number,branch_code,user_type) values (" + query + ")")
-
         conn.commit()
-        cur = conn.cursor()
-        cur.execute("ROLLBACK")
-        conn.commit()
-        cur.execute("SELECT * FROM adminusers")
-        rows = cur.fetchall()
-        for row in rows:
-            print('First Name ', row[0])
-            print('Last Name ', row[1])
-            print('UserName ', row[2])
-            print('Password ', row[3])
-            print('EMAIL ', row[4])
-            print('Phone number ', row[5])
-            print('Branch ', row[6])
-            print('Type ', row[7])
     return render_template('index.html')
+
+
+@app.route('/signin', methods=['GET', 'POST'])
+def signin():
+    user_id = request.form['user_id']
+    user_password = request.form['user_password']
+    # getting password match of user_id
+    cur = conn.cursor()
+    cur.execute("select Get_PASS("+str(user_id)+")")
+    result = cur.fetchall()
+    conn.commit()
+
+    # getting user_type
+
+    cur = conn.cursor()
+    cur.execute("select GET_type("+str(user_id)+")")
+    u_type = cur.fetchall()
+    u_types = [('CEO', 'HOD')]
+
+    if (user_password == result[0][0] and u_type[0][0] == u_types[0][0]):
+        return render_template('ceo.html')
+    elif (user_password == result[0][0] and u_type[0][0] == u_types[0][1]):
+        return render_template('hod.html')
+    else:
+        print("password not matched")
+        return render_template('custumer.html')
 
 
 if __name__ == '__main__':
