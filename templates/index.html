@@ -7,6 +7,7 @@
   <title>Document</title>
 </head>
 <body>
+
   <div>
       <div class="sign in">
       <h1>Sign-in</h1>
@@ -17,7 +18,22 @@
         <br><input type="text" id="user_password" name="user_password">
         <input type="submit" value="Submit">
     </form>
+      {% if error %}  
+        <p><strong>Error</strong>: {{error}}</p>  
+      {% endif %}  
   </div>
+  <a href = "{{url_for("signinadminpg")}}">Sign in admin</a>
+  {% if admins %}
+        <div class="sign in">
+      <h1>Sign-in</h1>
+      <form action="/signinadmin" method='POST'>
+        <br><label for = "user_id">user id</label>
+        <br><input type="text" id="user_id" name="user_id">
+        <br><label for = "user_password">Password</label>
+        <br><input type="text" id="user_password" name="user_password">
+        <input type="submit" value="Submit">
+    </form>
+  {% endif %}  
     <div class="sign up">
       <h1>Sign-up</h1>
     <form action="/signupuser" method='POST'>

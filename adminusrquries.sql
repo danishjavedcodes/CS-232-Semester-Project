@@ -1,11 +1,13 @@
 -------------------BY Danish Javed-------------------
+-- create table branch(branch_code integer primary key, city varchar);
+
 -- create table adminusers(f_name varchar not null,
 -- 						l_name varchar,
 -- 						user_id integer primary key not null,
 -- 						user_password varchar not null,
 -- 						e_mail varchar not null,
 -- 						phone_number numeric (14) not null,
--- 						branch_code integer not null,
+-- 						branch_code integer not null references branch(branch_code),
 -- 						user_type varchar not null);
 -- CREATE FUNCTION CHECK_PASS(U_ID INT, PASS VARCHAR)
 -- RETURNS BOOLEAN AS $$
@@ -101,4 +103,34 @@
 -- )
 
 
+-- CREATE FUNCTION GET_customers_PASS(U_ID varchar)
+-- RETURNS VARCHAR AS $$
+-- DECLARE 
+-- 	CHECK_PASS VARCHAR;
+-- BEGIN
+-- 	SELECT pass into CHECK_PASS
+-- 	FROM customers
+-- 	where user_id = $1;
+-- 	return CHECK_PASS;
+-- END;
+-- $$  LANGUAGE plpgsql
 
+
+-- create table products
+-- (
+-- 	prod_id int not null primary key,
+-- 	catogary varchar not null,
+-- 	price int not null,
+-- 	pro_type varchar not null,
+-- 	pro_location varchar not null,
+-- 	address varchar not null,
+-- 	p_size int not null,
+--  	description varchar
+-- );
+
+
+-- CREATE PROCEDURE add_products(p_id integer,cat varchar, price integer, p_type varchar, p_loc varchar, address varchar, p_size integer, p_decription varchar)
+-- LANGUAGE SQL
+-- as $$
+--   insert into products values (p_id+1, cat, price, p_type, p_loc, address, p_size, p_decription);
+-- $$;
