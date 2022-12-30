@@ -125,17 +125,25 @@
 -- 	pro_location varchar not null,
 -- 	address varchar not null,
 -- 	p_size int not null,
---  	description varchar,
+--  description varchar,
 -- 	upload_from integer,
 -- 	constraint fk_prod_id foreign key(upload_from) references adminusers(user_id)
 -- );
 
 
--- CREATE PROCEDURE add_products(p_id integer,cat varchar, price integer, p_type varchar, p_loc varchar, address varchar, p_size integer, p_decription varchar)
--- LANGUAGE SQL
--- as $$
---   insert into products values (p_id+1, cat, price, p_type, p_loc, address, p_size, p_decription);
--- $$;
+-- CREATE or REPLACE FUNCTION add_products(cat varchar, price integer, p_type varchar, p_loc varchar, address varchar, p_size integer, p_decription varchar)
+-- RETURNS integer AS $$
+-- DECLARE 
+-- 	p_id integer;
+-- 	cur_user integer;
+-- BEGIN
+-- 	select count(prod_id) into p_id from products;
+-- 	select user_id into cur_user from current_login_user where c_id=1;
+-- 	insert into products values (p_id+1, cat, price, p_type, p_loc, address, p_size, p_decription, cur_user);
+-- 	return p_id;
+-- END;
+-- $$  LANGUAGE plpgsql
+
 
 -- create table invoice
 -- (
@@ -155,7 +163,6 @@
 
 --BY SHURAHBEEL
 -- create table backupadmin(fname varchar,user_id integer, e_mail varchar, phone numeric(14),branch_code integer);
-
 -- create function move_del()
 -- returns trigger
 -- language plpgsql
@@ -190,8 +197,18 @@
 -- end;
 -- $$
 
+-- insert into
+-- 	products(prod_id,catogary,price,pro_type,pro_location,address,p_size,description,upload_from)
+-- values
+--  (1,'Shop',10000,'Rent','Islamabad','456 Avenue Main Boulevard',120,'A 120 ft square shop available for rent',1),
+--  (2,'Plot',250000,'Sale','Lahore','DHA Phase V Sector J',5500,'A 1 Kanal Plot available in Prime Location',1),
+--  (3,'Mall',250000,'Rent','Karachi','Tariq Road',550000,'A luxury mall with shops available at Tariq Road',2),
+--  (4,'House',40000,'Sale','Lahore','Johar Town',11000,'A 2 Kanal house available in Prime Location',2),
+--  (5,'Shop',34500,'Rent','Islamabad','Centaurus',300,'A 300 sq feet shop at Centaurus Mall Available',1),
+--  (6,'Plot',50000,'Sale','Kharian','Citi Housing',11000,'A 2 Kanal Plot available in Prime Location',1);
 
--------------------------BY Danish Javed---------------------
+-- alter table products
+-- alter column price type numeric;
 
 -- ALTER TABLE employees 
 -- ADD CONSTRAINT constraint_name 
@@ -202,6 +219,36 @@
 -- ADD CONSTRAINT constraint_name 
 -- FOREIGN KEY (branch_code) 
 -- REFERENCES branch (branch_code);
+
+-- insert into
+-- invoice(branch_code,income,expences,upload_date)
+-- values
+-- (1,15000,2100,CURRENT_DATE),
+-- (2,1000,12000,CURRENT_DATE),
+-- (2,1500,1200,CURRENT_DATE),
+-- (1,3500,4500,CURRENT_DATE),
+-- (1,1400,1200,CURRENT_DATE);
+
+-- insert into
+-- employees(ename,eid,brcode,salary)
+-- values
+-- ('Hassan',1,1,20000),
+-- ('Ahmad',2,2,40000),
+-- ('Yousaf',3,1,55000),
+-- ('Zain',4,1,76000),
+-- ('Hussein',2,1,81000),
+-- ('Ilyas',6,2,95000);
+
+-- insert into
+-- customers(user_id,f_name,l_name,contact,email,pass)
+-- values
+-- (1,'Ahmed','Ali',321543678,'ahmed@gmail.com','12347'),
+-- (2,'Zain','Naufal',321213456,'zain@gmail.com','2343'),
+-- (3,'Hassan','Ali',32154556565,'hassan@gmail.com','34322'),
+-- (4,'Bilal','Qaiser',321544321,'bilal@gmail.com','12217'),
+-- (5,'Farooq','Bajwa',321345556,'farooq@gmail.com','4567');
+-------------------------BY Danish Javed---------------------
+
 
 
 -- create table current_login_user(c_id integer, user_id integer REFERENCES adminusers(user_id), user_name varchar, branch_code integer REFERENCES branch(branch_code));
@@ -226,8 +273,7 @@
 -- $$
 
 
+-- create view current_invoice as 
+-- select * from invoice where branch_code = (select branch_code from current_login_user where c_id = 1);
 
 
-flash message
-delete hod -> prompt cannot delete ceo
-now we can add employees 
