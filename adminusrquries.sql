@@ -125,7 +125,9 @@
 -- 	pro_location varchar not null,
 -- 	address varchar not null,
 -- 	p_size int not null,
---  	description varchar
+--  	description varchar,
+-- 	upload_from integer,
+-- 	constraint fk_prod_id foreign key(upload_from) references adminusers(user_id)
 -- );
 
 
@@ -134,3 +136,98 @@
 -- as $$
 --   insert into products values (p_id+1, cat, price, p_type, p_loc, address, p_size, p_decription);
 -- $$;
+
+-- create table invoice
+-- (
+-- 	branch_code integer not null references branch(branch_code),
+-- 	income integer,
+-- 	expences integer,
+-- 	upload_date DATE
+-- );
+
+
+-- create procedure add_invoice(branch_code integer, income integer, expences integer)
+-- LANGUAGE SQL
+-- as $$
+--   insert into invoice values (branch_code, income, expences, CURRENT_DATE);
+-- $$;
+
+
+--BY SHURAHBEEL
+-- create table backupadmin(fname varchar,user_id integer, e_mail varchar, phone numeric(14),branch_code integer);
+
+-- create function move_del()
+-- returns trigger
+-- language plpgsql
+-- as
+-- $$
+-- begin 
+-- insert into backupadmin values (concat(old.f_name,' ',old.l_name),old.user_id,old.e_mail,old.phone_number,old.branch_code);
+-- delete from adminusers
+-- where old.user_id = new.user_id;
+-- return new;
+-- end;
+-- $$
+
+-- create table employees(ename varchar,eid integer primary key,brcode integer,salary integer);
+
+
+--create trigger movedata
+-- after delete
+-- on adminusers
+-- for each row
+-- execute function move_del();
+
+-- create procedure paysal(b_id integer)
+-- language plpgsql
+-- as
+-- $$
+-- declare 
+-- sum_Sal integer;
+-- begin
+-- select sum(salary) into sum_sal from employees where brcode = b_id;
+-- call add_invoice(bid, sum_sal , 0);
+-- end;
+-- $$
+
+
+-------------------------BY Danish Javed---------------------
+
+-- ALTER TABLE employees 
+-- ADD CONSTRAINT constraint_name 
+-- FOREIGN KEY (brcode) 
+-- REFERENCES branch (branch_code);
+
+-- ALTER TABLE backupadmin 
+-- ADD CONSTRAINT constraint_name 
+-- FOREIGN KEY (branch_code) 
+-- REFERENCES branch (branch_code);
+
+
+-- create table current_login_user(c_id integer, user_id integer REFERENCES adminusers(user_id), user_name varchar, branch_code integer REFERENCES branch(branch_code));
+
+
+-- create procedure update_current_user(u_id integer)
+-- language plpgsql
+-- as
+-- $$
+-- declare 
+-- b_code integer;
+-- u_name varchar;
+-- begin
+-- select branch_code into b_code from adminusers where user_id = u_id;
+-- select concat(f_name, ' ', l_name) into u_name from adminusers where user_id = u_id;
+-- update current_login_user
+-- set user_id = u_id,
+-- 	user_name = u_name,
+-- 	branch_code = b_code
+-- where c_id = 1;
+-- end;
+-- $$
+
+
+
+
+flash message
+delete hod -> prompt cannot delete ceo
+now we can add employees 

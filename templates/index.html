@@ -25,9 +25,9 @@
   <a href = "{{url_for("signinadminpg")}}">Sign in admin</a>
   {% if admins %}
         <div class="sign in">
-      <h1>Sign-in</h1>
+      <h4>Sign-in As Admin</h4>
       <form action="/signinadmin" method='POST'>
-        <br><label for = "user_id">user id</label>
+        <label for = "user_id">user id</label>
         <br><input type="text" id="user_id" name="user_id">
         <br><label for = "user_password">Password</label>
         <br><input type="text" id="user_password" name="user_password">
@@ -51,6 +51,9 @@
       <br><input type="text" id="contact" name="contact">
       <input type="submit" value="Submit">
   </form>
+  {% if msg %}
+  <p>{{ msg }}</p>
+  {% endif %}
   </div>
   </div>
 </body>

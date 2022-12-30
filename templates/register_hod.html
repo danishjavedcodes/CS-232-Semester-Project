@@ -24,10 +24,11 @@
         <br><input type="text" id="phone_number" name="phone_number">
         <br><label for = "branch_code">branch_code</label>
         <br><input type="text" id="branch_code" name="branch_code">
-        <br><label for = "user_type">user_type</label>
-        <br><input type="text" id="user_type" name="user_type">
         <input type="submit" value="Submit">
     </form>
+    {% if msg %}
+    <h4>{{msg}}</h4>
+    {% endif %}
   </div>
 </body>
 </html>

@@ -16,6 +16,9 @@
         <br><input type="text" id="city" name="city">
         <input type="submit" value="Submit">
     </form>
+    {% if msg %}
+    <p>{{msg}}</p>
+    {% endif %}
   </div>
 </body>
 </html>
